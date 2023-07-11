@@ -1,0 +1,217 @@
+import pandas as pd
+
+# Load the data into a dataframe
+data = pd.read_csv('your_data_file.csv')
+
+# 1. What are the company names with the highest valuation?
+highest_valuation_companies = data[data['Valuation'] == data['Valuation'].max()]['Company'].tolist()
+
+# 2. Which companies reached $1 billion valuation on a specific date?
+companies_reached_valuation_on_date = data[data['Date Joined'] == 'specific_date']['Company'].tolist()
+
+# 3. Which industries have the highest average valuation?
+industry_avg_valuation = data.groupby('Industry')['Valuation'].mean().sort_values(ascending=False)
+
+# 4. What are the top 5 cities with the most companies founded?
+top_cities_with_most_companies = data['City'].value_counts().nlargest(5)
+
+# 5. How many companies were founded in a specific country?
+companies_founded_in_country = len(data[data['Country'] == 'specific_country'])
+
+# 6. Which continent has the highest total funding amount?
+continent_highest_funding = data.groupby('Continent')['Funding'].sum().idxmax()
+
+# 7. How many companies were founded in a specific year?
+companies_founded_in_year = len(data[data['Year Founded'] == specific_year])
+
+# 8. What is the total funding amount raised by a specific company?
+total_funding_by_company = data[data['Company'] == 'specific_company']['Funding'].sum()
+
+# 9. Which companies have received investments from a specific investor?
+companies_invested_by_investor = data[data['Select Investors'].str.contains('specific_investor')]['Company'].tolist()
+
+# 10. What are the common investors across all companies?
+common_investors = data['Select Investors'].str.split(',', expand=True).stack().value_counts().index.tolist()
+
+# 11. Which companies have received investments from the same set of investors?
+companies_with_same_investors = data[data.duplicated(subset='Select Investors', keep=False)]['Company'].tolist()
+
+# 12. How many companies have been invested in by a specific investor?
+companies_invested_by_specific_investor = len(data[data['Select Investors'].str.contains('specific_investor')])
+
+# 13. Which investor has made the highest total investments in terms of funding amount?
+highest_investing_investor = data.groupby('Select Investors')['Funding'].sum().idxmax()
+
+# 14. What is the average funding amount invested by each investor?
+average_funding_by_investor = data.groupby('Select Investors')['Funding'].mean()
+
+# 15. Which industry attracts the most investments from a specific investor?
+industry_most_invested_by_investor = data[data['Select Investors'].str.contains('specific_investor')]['Industry'].mode()
+
+# 16. Are there any investors that have invested in companies across multiple industries?
+investors_invested_in_multiple_industries = data.groupby('Select Investors')['Industry'].nunique().gt(1)
+
+# 17. How many investors have invested in companies founded in a specific year?
+investors_invested_in_specific_year = len(data[data['Year Founded'] == specific_year]['Select Investors'].unique())
+
+# 18. What is the distribution of investments across different continents by a particular investor?
+investments_distribution_by_investor = data[data['Select Investors'] == 'specific_investor']['Continent'].value_counts()
+
+# 19. Among the top 4 investors, which investor has the highest average valuation of companies they have invested in?
+top_4_investors_avg_valuation = data[data['Select Investors'].isin(['investor1', 'investor2', 'investor3', 'investor4'])].groupby('Select Investors')['Valuation'].mean().idxmax()
+
+# 20. How many companies have the same valuation as the highest valuation?
+companies_same_valuation_as_highest = len(data[data['Valuation'] == data['Valuation'].max()])
+
+# Print the results
+print("Question 1: Company names with the highest valuation:", highest_valuation_companies)
+print("Question 2: Companies reached $1 billion valuation on a specific date:", companies_reached_valuation_on_date)
+print("Question 3: Industries with the highest average valuation:\n", industry_avg_valuation)
+print("Question 4: Top 5 cities with the most companies founded:\n", top_cities_with_most_companies)
+print("Question 5: Number of companies founded in a specific country:", companies_founded_in_country)
+print("Question 6: Continent with the highest total funding amount:", continent_highest_funding)
+print("Question 7: Number of companies founded in a specific year:", companies_founded_in_year)
+print("Question 8: Total funding amount raised by a specific company:", total_funding_by_company)
+print("Question 9: Companies received investments from a specific investor:", companies_invested_by_investor)
+print("Question 10: Common investors across all companies:", common_investors)
+print("Question 11: Companies received investments from the same set of investors:", companies_with_same_investors)
+print("Question 12: Number of companies invested in by a specific investor:", companies_invested_by_specific_investor)
+print("Question 13: Investor with the highest total investments:", highest_investing_investor)
+print("Question 14: Average funding amount invested by each investor:\n", average_funding_by_investor)
+print("Question 15: Industry attracts the most investments from a specific investor:", industry_most_invested_by_investor)
+print("Question 16: Investors that have invested in companies across multiple industries:\n", investors_invested_in_multiple_industries)
+print("Question 17: Number of investors invested in companies founded in a specific year:", investors_invested_in_specific_year)
+print("Question 18: Distribution of investments across continents by a particular investor:\n", investments_distribution_by_investor)
+print("Question 19: Investor with the highest average valuation among top 4 investors:", top_4_investors_avg_valuation)
+print("Question 20: Number of companies with the same valuation as the highest valuation:", companies_same_valuation_as_highest)
+
+import pandas as pd
+
+# Load the data into a dataframe
+data = pd.read_csv('your_data_file.csv')
+
+# What are the top 5 most common investors across all companies?
+top_5_common_investors = data['Select Investors'].str.split(',', expand=True).stack().value_counts().nlargest(5)
+
+# Which companies have received investments from the same set of investors?
+companies_same_investors = data[data.duplicated(subset='Select Investors', keep=False)]['Company'].tolist()
+
+# How many companies have been invested in by a specific investor?
+companies_invested_by_specific_investor = len(data[data['Select Investors'].str.contains('specific_investor')])
+
+# Which investor has made the highest total investments in terms of funding amount?
+highest_investing_investor = data.groupby('Select Investors')['Funding'].sum().idxmax()
+
+# What is the average funding amount invested by each investor?
+average_funding_by_investor = data.groupby('Select Investors')['Funding'].mean()
+
+# Which industry attracts the most investments from a specific investor?
+industry_most_invested_by_investor = data[data['Select Investors'].str.contains('specific_investor')]['Industry'].mode()
+
+# Are there any investors that have invested in companies across multiple industries?
+investors_invested_in_multiple_industries = data.groupby('Select Investors')['Industry'].nunique().gt(1)
+
+# How many investors have invested in companies founded in a specific year?
+investors_invested_in_specific_year = len(data[data['Year Founded'] == specific_year]['Select Investors'].unique())
+
+# What is the distribution of investments across different continents by a particular investor?
+investments_distribution_by_investor = data[data['Select Investors'] == 'specific_investor']['Continent'].value_counts()
+
+# Among the top 4 investors, which investor has the highest average valuation of companies they have invested in?
+top_4_investors_avg_valuation = data[data['Select Investors'].isin(['investor1', 'investor2', 'investor3', 'investor4'])].groupby('Select Investors')['Valuation'].mean().idxmax()
+
+# Print the results
+print("Question 21: Top 5 most common investors across all companies:\n", top_5_common_investors)
+print("Question 22: Companies received investments from the same set of investors:\n", companies_same_investors)
+print("Question 23: Number of companies invested in by a specific investor:", companies_invested_by_specific_investor)
+print("Question 24: Investor with the highest total investments:", highest_investing_investor)
+print("Question 25: Average funding amount invested by each investor:\n", average_funding_by_investor)
+print("Question 26: Industry attracts the most investments from a specific investor:", industry_most_invested_by_investor)
+print("Question 27: Investors that have invested in companies across multiple industries:\n", investors_invested_in_multiple_industries)
+print("Question 28: Number of investors invested in companies founded in a specific year:", investors_invested_in_specific_year)
+print("Question 29: Distribution of investments across continents by a particular investor:\n", investments_distribution_by_investor)
+print("Question 30: Investor with the highest average valuation among top 4 investors:", top_4_investors_avg_valuation)
+
+import matplotlib.pyplot as plt
+
+industry_valuation = data.groupby('Industry')['Valuation'].sum()
+industry_valuation.plot(kind='bar')
+plt.xlabel('Industry')
+plt.ylabel('Valuation (in billions)')
+plt.title('Company Valuation by Industry')
+plt.show()
+
+continent_counts = data['Continent'].value_counts()
+continent_counts.plot(kind='pie', autopct='%1.1f%%')
+plt.title('Distribution of Companies by Continent')
+plt.axis('equal')
+plt.show()
+
+data['Date Joined'] = pd.to_datetime(data['Date Joined'])
+funding_over_time = data.groupby('Date Joined')['Funding'].sum()
+funding_over_time.plot(kind='line')
+plt.xlabel('Date Joined')
+plt.ylabel('Funding Amount (in billions)')
+plt.title('Funding Amount Over Time')
+plt.show()
+
+plt.scatter(data['Funding'], data['Valuation'])
+plt.xlabel('Funding (in billions)')
+plt.ylabel('Valuation (in billions)')
+plt.title('Funding vs. Valuation')
+plt.show()
+
+data.boxplot(column='Funding', by='Industry')
+plt.xlabel('Industry')
+plt.ylabel('Funding (in billions)')
+plt.title('Funding Distribution by Industry')
+plt.suptitle('')  # Remove the default title generated by pandas
+plt.xticks(rotation=45)
+plt.show()
+
+import matplotlib.pyplot as plt
+
+funding_by_industry_continent = data.groupby(['Industry', 'Continent'])['Funding'].sum().unstack()
+funding_by_industry_continent.plot(kind='bar', stacked=True)
+plt.xlabel('Industry')
+plt.ylabel('Funding (in billions)')
+plt.title('Funding by Industry and Continent')
+plt.legend(title='Continent')
+plt.show()
+
+
+import seaborn as sns
+
+correlation_matrix = data[['Valuation', 'Funding', 'Year Founded']].corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation between Valuation, Funding, and Year Founded')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Continent', y='Funding', hue='Industry', data=data)
+sns.swarmplot(x='Continent', y='Funding', hue='Industry', data=data, dodge=True, color='black', size=4)
+plt.xlabel('Continent')
+plt.ylabel('Funding (in billions)')
+plt.title('Funding Distribution by Continent and Industry')
+plt.legend(title='Industry')
+plt.show()
+
+plt.scatter(data['Funding'], data['Valuation'], s=data['Funding']*10, c=data['Industry'].astype('category').cat.codes, alpha=0.6, cmap='Set3')
+plt.xlabel('Funding (in billions)')
+plt.ylabel('Valuation (in billions)')
+plt.title('Valuation vs. Funding')
+plt.colorbar(label='Industry')
+plt.show()
+
+import squarify
+
+industry_funding = data.groupby('Industry')['Funding'].sum()
+labels = industry_funding.index
+sizes = industry_funding.values
+
+plt.figure(figsize=(10, 6))
+squarify.plot(sizes=sizes, label=labels, alpha=0.8)
+plt.title('Funding Distribution by Industry')
+plt.axis('off')
+plt.show()
+
